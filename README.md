@@ -21,6 +21,7 @@ This repository contains the crop prediction project and land e-commerce system 
 1. Create a virtual environment:
    ```bash
    python -m venv venv
+```
 
 2. Activate the environment:
 macOS/Linux: source venv/bin/activate
@@ -29,10 +30,11 @@ Windows: venv\Scripts\activate
 3. Install dependencies:
 ```bash
 pip install -r requirements.txt
+```
 
 4. Run the backend:
 ```bash
 python app.py
-
+```
 5. Run frontend
 Open frontend/index.html in your browser
