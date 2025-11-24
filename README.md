@@ -8,10 +8,31 @@ This repository contains the crop prediction project and land e-commerce system 
    - Frontend + backend
    - Python, Flask, HTML/CSS, JavaScript
 
-2. **Farm Management Portal**
+2. **Land Management Portal**
    - Frontend + backend
    - Node.js, Express, React
 
 3. **Soil Analysis Dashboard**
    - Frontend + backend
    - Python, Dash, HTML/CSS
+
+## Instructions
+
+1. Create a virtual environment:
+   ```bash
+   python -m venv venv
+
+2. Activate the environment:
+macOS/Linux: source venv/bin/activate
+Windows: venv\Scripts\activate
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+
+4. Run the backend:
+```bash
+python app.py
+
+5. Run frontend
+Open frontend/index.html in your browser
