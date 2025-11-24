@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Land Details - AgroVista</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Custom CSS & Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <style>
+    /* Base Variables */
+    :root {
+      --primary-green: #28a745;
+      --primary-green-hover: #218838;
+      --white: #fff;
+      --bg-overlay: rgba(0,0,0,0.5);
+    }
+
+    /* Global Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      background: #f8f9fa;
+    }
+
+    /* Navbar */
+    nav.navbar {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    nav .navbar-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      color: var(--primary-green);
+    }
+
+    /* Hero Section */
+    .buy-sell-hero {
+      position: relative;
+      height: 30vh;
+      background: url('assets/images/land-banner.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--white);
+      overflow: hidden;
+    }
+    .buy-sell-hero::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-overlay);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: heroFadeIn 1.2s ease-out;
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, var(--primary-green), var(--primary-green-hover));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textGradient 3s ease infinite;
+    }
+    @keyframes textGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero-content p {
+      font-size: 1.3rem;
+      color: var(--white);
+    }
+
+    /* Details Card Container */
+    .details-container {
+      margin: 40px auto;
+      max-width: 1200px;
+      padding: 20px;
+    }
+    .details-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .details-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    }
+
+    /* Carousel Styling */
+    .carousel-inner img {
+      border-radius: 10px;
+      object-fit: cover;
+      height: 300px;
+      transition: transform 0.3s ease;
+    }
+    .carousel-inner img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Land Details Text */
+    .land-details h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      color: var(--primary-green);
+      margin-bottom: 20px;
+    }
+    .land-details p {
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+    .land-details i {
+      color: var(--primary-green);
+    }
+    .land-details .text-muted {
+      color: #666;
+    }
+
+    /* Map Styling */
+    #map {
+      border: 2px solid var(--primary-green);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      margin-top: 20px;
+    }
+
+    /* Seller Section */
+    .seller-info {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .seller-info h4 {
+      font-size: 1.5rem;
+      color: var(--primary-green);
+      margin-bottom: 10px;
+    }
+    .seller-info p {
+      font-size: 1rem;
+    }
+    .contact-btn {
+      display: block;
+      width: 100%;
+      font-size: 1.1rem;
+      padding: 12px;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+      background: linear-gradient(45deg, var(--primary-green), var(--primary-green-hover));
+      color: var(--white);
+      border: none;
+      margin-top: 15px;
+    }
+    .contact-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    /* Back Button */
+    .back-btn {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .back-btn a {
+      font-size: 1.1rem;
+      padding: 10px 20px;
+      border-radius: 10px;
+      background: #6c757d;
+      color: var(--white);
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .back-btn a:hover {
+      background: #5a6268;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+      .details-card {
+        padding: 20px;
+      }
+      .carousel-inner img {
+        height: 220px;
+      }
+      #map {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top px-5 py-3">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="index.html">AGROVISTA</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="index.html#about" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="index.html#services" class="nav-link">Services</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="buy-hero">
+    <div class="hero-content">
+      <h1>Land Details</h1>
+      <p>Discover the ideal land for your agricultural dreams</p>
+    </div>
+  </section>
+
+  <!-- Land Details Container -->
+  <div class="container details-container">
+    <div class="details-card p-4">
+      <div class="row">
+        <!-- Image Carousel -->
+        <div class="col-md-6">
+          <div id="landCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner" id="carouselImages"></div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#landCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#landCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Land Details Section -->
+        <div class="col-md-6 land-details">
+          <h2 class="fw-bold text-success" id="landTitle">Loading...</h2>
+          <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> <span id="location"></span></p>
+          <p><i class="fas fa-ruler"></i> <strong>Size:</strong> <span id="landSize"></span> acres</p>
+          <p><i class="fas fa-tag"></i> <strong>Price:</strong> ₹<span id="price"></span></p>
+          <p><i class="fas fa-seedling"></i> <strong>Soil Type:</strong> <span id="soilType"></span></p>
+          <p><i class="fas fa-tint"></i> <strong>Water Source:</strong> <span id="waterSource"></span></p>
+          <p><i class="fas fa-file-alt"></i> <strong>Description:</strong></p>
+          <p id="description" class="text-muted">Loading...</p>
+          <div id="map" style="height: 400px; margin-top: 20px; border: 2px solid var(--primary-green); border-radius: 10px;"></div>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Seller Details -->
+      <div class="seller-info">
+        <h4 class="mt-3">👤 Seller Information</h4>
+        <p>
+          <strong>📞 Contact:</strong> <span id="sellerName"></span> - <span id="sellerPhone"></span><br>
+          <strong>📧 Email:</strong> <span id="sellerEmail"></span>
+        </p>
+        <a href="mailto:" id="contactSeller" class="btn contact-btn">
+          <i class="fas fa-envelope"></i> Contact Seller
+        </a>
+      </div>
+
+      <!-- Back Button -->
+      <div class="back-btn">
+        <a href="buy.html">⬅ Back to Listings</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS, Leaflet, and Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    async function fetchLandDetails() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const landId = urlParams.get("id");
+      if (!landId) {
+        document.getElementById("landTitle").innerText = "Invalid Land ID!";
+        console.error("No Land ID found in URL");
+        return;
+      }
+      try {
+        const response = await fetch(`http://localhost:5000/api/get-land/${landId}`);
+        if (!response.ok) {
+          throw new Error(`Server responded with status: ${response.status}`);
+        }
+        const land = await response.json();
+        document.getElementById("landTitle").innerText = land.landTitle || "No Title Available";
+        document.getElementById("location").innerText = land.location || "Unknown";
+        document.getElementById("price").innerText = land.price || "Not specified";
+        document.getElementById("landSize").innerText = land.landSize || "Not specified";
+        document.getElementById("soilType").innerText = land.soilType || "Unknown";
+        document.getElementById("waterSource").innerText = land.waterSource || "Not specified";
+        document.getElementById("description").innerText = land.description || "No description available";
+        document.getElementById("sellerName").innerText = land.sellerName || "Unknown";
+        document.getElementById("sellerPhone").innerText = land.sellerPhone || "Not provided";
+        document.getElementById("sellerEmail").innerText = land.sellerEmail || "Not provided";
+        document.getElementById("contactSeller").href = `mailto:${land.sellerEmail || ""}`;
+  
+        // Populate Image Carousel
+        const carouselContainer = document.getElementById("carouselImages");
+        carouselContainer.innerHTML = "";
+        if (land.images && land.images.length > 0) {
+          land.images.forEach((img, index) => {
+            carouselContainer.innerHTML += `
+              <div class="carousel-item ${index === 0 ? "active" : ""}">
+                <img src="http://localhost:5000/${img}" class="d-block w-100" alt="Land Image">
+              </div>
+            `;
+          });
+        } else {
+          carouselContainer.innerHTML = `
+            <div class="carousel-item active">
+              <img src="assets/images/placeholder.jpg" class="d-block w-100" alt="No Image">
+            </div>
+          `;
+        }
+  
+        // Set Map
+        if (land.lat && land.lon) {
+          const map = L.map('map').setView([land.lat, land.lon], 12);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+          }).addTo(map);
+          L.marker([land.lat, land.lon]).addTo(map)
+            .bindPopup("<b>Land Location</b>").openPopup();
+        } else {
+          document.getElementById("map").innerHTML = "Location not available";
+        }
+  
+      } catch (error) {
+        console.error("Error fetching land details:", error);
+        document.getElementById("landTitle").innerText = "Failed to load land details.";
+      }
+    }
+    document.addEventListener("DOMContentLoaded", fetchLandDetails);
+  
+    async function fetchNearbyResources(lat, lon) {
+      try {
+        const response = await fetch(`http://localhost:5001/api/get-nearby-resources?lat=${lat}&lon=${lon}`);
+        const data = await response.json();
+        if (!data.markets.length && !data.irrigation.length) {
+          console.warn("No nearby resources found.");
+          return;
+        }
+        // Add resources to map (this function can be expanded further)
+      } catch (error) {
+        console.error("Error fetching nearby resources:", error);
+      }
+    }
+  </script>
+</body>
+</html>

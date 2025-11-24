@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup - AgroVista</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-green: #28a745;
+      --primary-green-hover: #218838;
+      --white-glass: rgba(255, 255, 255, 0.15);
+      --text-color: #fff;
+    }
+    /* Animated Gradient Background */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      /* Allow vertical scrolling on the entire page if needed */
+      overflow-y: auto;
+      background: linear-gradient(270deg, #74ebd5, #ACB6E5, #74ebd5);
+      background-size: 600% 600%;
+      animation: gradientAnimation 16s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      color: var(--text-color);
+    }
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    /* Navbar - Centered AGROVISTA Logo */
+    nav {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+    nav .navbar-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      color: var(--primary-green);
+    }
+    /* Signup Wrapper Container */
+    .login-wrapper {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: row;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      max-width: 1000px;
+      width: 90%;
+      margin-top: 100px;
+      transition: all 0.6s ease;
+    }
+    /* Left Panel (Features) - No scrolling on panel */
+    .login-left {
+      flex: 1;
+      padding: 40px;
+      background: url('assets/images/signup-Panel-Bg.jpg') no-repeat center center/cover;
+      position: relative;
+      transition: all 0.6s ease;
+    }
+    .login-left::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1;
+    }
+    .login-left-content {
+      position: relative;
+      z-index: 2;
+    }
+    .login-left h3 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      animation: fadeSlide 1s ease-out;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .features-list {
+      margin-top: 20px;
+    }
+    .features-list ul {
+      list-style: disc;
+      padding-left: 20px;
+      font-size: 1.1rem;
+    }
+    .features-list li {
+      margin-bottom: 10px;
+    }
+    .login-left p {
+      font-size: 1.2rem;
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+    /* Updated Left Panel Text */
+    /* Toggle Arrow - Positioned inside left panel at its right edge */
+    .toggle-arrow {
+      position: absolute;
+      top: 50%;
+      right: -20px;
+      transform: translateY(-50%);
+      background: var(--primary-green);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.3s;
+      z-index: 2;
+    }
+    .toggle-arrow:hover {
+      transform: translateY(-50%) scale(1.1);
+    }
+    .login-wrapper.expanded .login-left {
+      transform: translateX(-80%);
+      width: 15%;
+    }
+    .login-wrapper.expanded .toggle-arrow {
+      transform: translateY(-50%) rotate(180deg);
+    }
+    .login-wrapper.expanded .login-right {
+      transform: translateX(-150px);
+    }
+    /* Right Panel - Signup Form */
+    .login-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      position: relative;
+      transition: all 0.6s ease;
+    }
+    /* Animated Blob Background behind Signup Card */
+    .blob-background {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: var(--primary-green);
+      opacity: 0.2;
+      border-radius: 50%;
+      top: -50px;
+      left: -50px;
+      z-index: 0;
+      animation: blob 8s infinite ease-in-out;
+    }
+    @keyframes blob {
+      0% { transform: scale(1) translate(0,0); border-radius: 40% 60% 55% 45%; }
+      50% { transform: scale(1.2) translate(20px, -20px); border-radius: 50% 50% 40% 60%; }
+      100% { transform: scale(1) translate(0,0); border-radius: 40% 60% 55% 45%; }
+    }
+    /* Signup Card with Glassmorphism */
+    .login-card {
+      position: relative;
+      background: var(--white-glass);
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 420px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+      z-index: 1;
+    }
+    .login-card:hover {
+      transform: translateY(-5px);
+    }
+    .login-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      color: var(--primary-green);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    /* Role Toggle Buttons */
+    .role-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .role-toggle button {
+      flex: 1;
+      margin: 0 5px;
+      padding: 10px;
+      border: 2px solid var(--primary-green);
+      background: transparent;
+      border-radius: 50px;
+      color: var(--primary-green);
+      transition: background 0.3s, color 0.3s;
+      cursor: pointer;
+    }
+    .role-toggle button.active,
+    .role-toggle button:hover {
+      background: var(--primary-green);
+      color: #fff;
+    }
+    /* Green-themed Input Fields */
+    .login-card form .form-label {
+      color: var(--primary-green);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .login-card form .form-control {
+      background: #fff;
+      color: var(--primary-green);
+      border: 1px solid var(--primary-green);
+      border-radius: 10px;
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 1rem;
+    }
+    .login-card form .form-control::placeholder {
+      color: var(--primary-green);
+      opacity: 0.7;
+    }
+    /* Signup Button */
+    .login-card form button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(45deg, var(--primary-green), var(--primary-green-hover));
+      background-size: 200%;
+      color: #fff;
+      font-weight: 600;
+      transition: background-position 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .login-card form button[type="submit"]:hover {
+      background-position: right center;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .help-section, .signup-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .signup-link a {
+      text-decoration: none;
+      color: var(--primary-green);
+      font-weight: 600;
+      border: 1px solid var(--primary-green);
+      padding: 8px 16px;
+      border-radius: 50px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .signup-link a:hover {
+      background: var(--primary-green);
+      color: #fff;
+    }
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+      .login-wrapper {
+        flex-direction: column;
+      }
+      .login-left, .login-right {
+        flex: none;
+        width: 100%;
+      }
+      .login-left {
+        padding: 40px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar with centered AGROVISTA logo -->
+  <nav>
+    <div class="container">
+      <a class="navbar-brand" href="index.html">AGROVISTA</a>
+    </div>
+  </nav>
+  
+  <!-- Signup Wrapper Container -->
+  <div class="login-wrapper">
+    <!-- Left Panel (Features) -->
+    <div class="login-left">
+      <div class="login-left-content">
+        <h3>Things You Can Do with Your AgroVista Account</h3>
+        <div class="features-list">
+          <ul>
+            <li>List Your Agricultural Land for FREE</li>
+            <li>Set Alerts for Your Desired Land Listings</li>
+            <li>Get Accessed by Thousands of Potential Buyers</li>
+            <li>Showcase Your Land for Sale or Lease</li>
+            <li>Receive Instant Inquiries via Phone, Email</li>
+            <li>Track Listing Performance and Monitor Views &amp; Responses</li>
+            <li>Add Detailed Land Information with Multiple Images</li>
+          </ul>
+        </div>
+        <p>AgroVista makes buying and selling agricultural land effortless! 🚜🌱</p>
+      </div>
+      <!-- Toggle Arrow inside left panel so it moves together with the panel -->
+      <button class="toggle-arrow" id="toggle-arrow"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <!-- Right Panel (Signup Form) -->
+    <div class="login-right">
+      <!-- Animated Blob Background -->
+      <div class="blob-background"></div>
+      <div class="login-card">
+        <h3 class="text-center">Signup</h3>
+        <!-- Role Toggle Buttons -->
+        <div class="role-toggle mb-4">
+          <button type="button" id="buyer-btn" class="btn btn-outline-success">Buyer</button>
+          <button type="button" id="seller-btn" class="btn btn-outline-primary">Seller</button>
+        </div>
+        <form id="signup-form">
+          <div class="mb-4">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+          </div>
+          <div class="mb-4">
+            <label for="email" class="form-label">Email ID</label>
+            <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+          </div>
+          <div class="mb-4">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Your Password" required>
+          </div>
+          <div class="mb-4">
+            <label for="mobileno" class="form-label">Mobile No.</label>
+            <input type="text" class="form-control" id="mobileno" placeholder="Your Mobile No." required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-2">Signup</button>
+        </form>
+        <div class="text-center mt-4 signup-link">
+          <p>Already have an account? <a href="login.html" class="btn btn-outline-dark px-3 py-2">Login</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bootstrap JS & Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    let selectedRole = "";
+    const buyerBtn = document.getElementById("buyer-btn");
+    const sellerBtn = document.getElementById("seller-btn");
+    
+    buyerBtn.addEventListener("click", () => {
+      selectedRole = "Buyer";
+      buyerBtn.classList.add("active");
+      sellerBtn.classList.remove("active");
+    });
+    sellerBtn.addEventListener("click", () => {
+      selectedRole = "Seller";
+      sellerBtn.classList.add("active");
+      buyerBtn.classList.remove("active");
+    });
+    
+    // Toggle left panel on arrow click
+    document.getElementById('toggle-arrow').addEventListener('click', function() {
+      document.querySelector('.login-wrapper').classList.toggle('expanded');
+    });
+    
+    // Handle signup form submission
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const mobileno = document.getElementById('mobileno').value;
+      
+      if (!selectedRole) {
+        alert("Please select Buyer or Seller before signing up.");
+        return;
+      }
+      
+      const data = {
+        username: name,
+        email: email,
+        mobileNo: mobileno,
+        password: password,
+        role: selectedRole
+      };
+      
+      axios.post('http://localhost:5000/api/signup', data)
+        .then(response => {
+          alert(response.data.message);
+          window.location.href = 'login.html';
+        })
+        .catch(error => {
+          alert(error.response.data.message);
+        });
+    });
+  </script>
+</body>
+</html>

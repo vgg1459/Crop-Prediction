@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Profile - AgroVista</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- Custom Styles for a Premium Agriculture Theme -->
+  <style>
+    :root {
+      --primary-green: #2E7D32;       /* Deep, earthy green */
+      --accent-green: #66BB6A;        /* Vibrant, fresh accent green */
+      --dark-green: #1B5E20;          /* Darker shade for contrast */
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --text-color: #E8F5E9;
+    }
+    
+    /* Organic animated background mimicking fertile fields */
+    body {
+      margin: 0;
+      padding-top: 100px;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
+      background-size: 400% 400%;
+      animation: bgAnim 10s ease infinite;
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+    @keyframes bgAnim {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* Elegant Navbar with semi-transparent overlay */
+    nav.navbar {
+      background: rgba(0, 0, 0, 0.75);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    nav .navbar-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      color: var(--accent-green);
+    }
+    
+    /* Container for Profile Content */
+    .profile-container {
+      margin-top: 80px;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 20px;
+    }
+    
+    /* Premium Glassmorphism Card with natural accents */
+    .profile-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .profile-card:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+    
+    /* Expressive Profile Info with organic icons */
+    .profile-info {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      color: var(--text-color);
+    }
+    .profile-info i {
+      color: var(--accent-green);
+      margin-right: 12px;
+    }
+    
+    /* Custom Buttons with natural gradients */
+    .btn-custom {
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    .edit-btn {
+      background: var(--accent-green);
+      color: var(--dark-green);
+      border: none;
+    }
+    .edit-btn:hover {
+      background: #4caf50;
+    }
+    .deactivate-btn {
+      background: #e53935;
+      color: white;
+      border: none;
+    }
+    .deactivate-btn:hover {
+      background: #c62828;
+    }
+    
+    /* Stats Boxes with subtle glow and organic touch */
+    .stats-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .stats-box:hover {
+      background: rgba(255,255,255,0.2);
+      transform: scale(1.05);
+    }
+    .stats-box span {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+    
+    @media (max-width: 991px) {
+      .profile-container {
+        margin-top: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container text-center">
+      <a class="navbar-brand fw-bold" href="index.html">AGROVISTA</a>
+    </div>
+  </nav>
+  
+  <!-- Profile Container -->
+  <div class="container profile-container">
+    <div class="row g-4 w-100">
+      <!-- Left Card: Personal Details -->
+      <div class="col-md-4">
+        <div class="profile-card h-100 text-center">
+          <h4><i class="fas fa-seedling"></i> Personal Details</h4>
+          <hr>
+          <p class="profile-info"><i class="fas fa-user"></i> <strong>Name:</strong> <span id="sellerName"></span></p>
+          <p class="profile-info"><i class="fas fa-envelope"></i> <strong>Email:</strong> <span id="sellerEmail"></span></p>
+          <p class="profile-info"><i class="fas fa-phone"></i> <strong>Phone:</strong> <span id="sellerPhone"></span></p>
+        </div>
+      </div>
+      
+      <!-- Right Cards: Account & Listings Overview -->
+      <div class="col-md-8 d-flex flex-column gap-3">
+        <div class="profile-card text-center">
+          <h4><i class="fas fa-tractor"></i> My AgroVista Account</h4>
+          <hr>
+          <button class="btn btn-custom edit-btn me-3"><i class="fas fa-edit"></i> Edit Profile</button>
+          <button class="btn btn-custom deactivate-btn"><i class="fas fa-trash-alt"></i> Deactivate</button>
+        </div>
+        <div class="profile-card">
+          <h4 class="text-center"><i class="fas fa-list-alt"></i> My Listings Overview</h4>
+          <hr>
+          <div class="stats-box"> <span>Total Listings</span> <span id="totalListings">0</span> </div>
+          <div class="stats-box"> <span>Verified Seller</span> <span id="verifiedStatus">No</span> </div>
+          <div class="stats-box"> <span>Total Views</span> <span id="totalViews">0</span> </div>
+          <div class="stats-box"> <span>Inquiries Received</span> <span id="totalInquiries">0</span> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bootstrap JS -->  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async function() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Please log in to view your profile.");
+        window.location.href = "login.html";
+        return;
+      }
+      try {
+        const response = await fetch("http://localhost:5000/api/user-profile", {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        });
+        if (!response.ok) throw new Error("Failed to fetch profile data.");
+        const userData = await response.json();
+        document.getElementById("sellerName").textContent = userData.username;
+        document.getElementById("sellerEmail").textContent = userData.email;
+        document.getElementById("sellerPhone").textContent = userData.mobileNo;
+        document.getElementById("totalListings").textContent = userData.totalListings || "0";
+        document.getElementById("verifiedStatus").textContent = userData.verifiedSeller ? "✅ Yes" : "❌ No";
+        document.getElementById("totalViews").textContent = userData.totalViews || "0";
+        document.getElementById("totalInquiries").textContent = userData.totalInquiries || "0";
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+        alert("Failed to load profile.");
+      }
+    });
+  </script>
+</body>
+</html>

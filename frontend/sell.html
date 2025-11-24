@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sell Land - AgroVista</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-green: #28a745;
+      --primary-green-hover: #218838;
+      --white-glass: rgba(255, 255, 255, 0.85);
+      --background-gradient: linear-gradient(135deg, #e8f5e9, #c8e6c9, #e8f5e9);
+    }
+
+    /* Global Styles & Background Animation */
+    body {
+      margin: 0;
+      padding-top: 100px;
+      font-family: 'Roboto', sans-serif;
+      background: var(--background-gradient);
+      background-size: 400% 400%;
+      animation: bgAnimation 8s ease infinite;
+      overflow-x: hidden;
+    }
+    @keyframes bgAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Navbar */
+    nav.navbar {
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    nav .navbar-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      color: var(--primary-green);
+    }
+
+    /* Hero Section */
+    .sell-hero {
+      position: relative;
+      height: 25vh;
+      background: url('assets/images/sell.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .sell-hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(40,167,69,0.5); /* crisp green overlay */
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: heroFadeIn 1.2s ease-out;
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, var(--primary-green), var(--primary-green-hover));
+      background-size: 300% 300%;
+      animation: textGradient 3s ease infinite;
+      background-clip: text;
+      -webkit-background-clip: text;
+      background-clip: text; /* Standard property */
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    @keyframes textGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero-content p {
+      font-size: 1.3rem;
+      color: #fff;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      width: 100%;
+      background: #e9ecef;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      height: 8px;
+    }
+    .progress-bar {
+      height: 8px;
+      background: linear-gradient(90deg, var(--primary-green), var(--primary-green-hover));
+      width: 0%;
+      transition: width 0.4s ease-in-out;
+    }
+
+    /* Form Container */
+    .form-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    /* Glassmorphism Form Card */
+    .sell-form-card {
+      background: var(--white-glass);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: cardIn 0.6s ease-out;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .sell-form-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    }
+
+    /* Multi-Step Form */
+    .form-step {
+      display: none;
+    }
+    .form-step-active {
+      display: block;
+      animation: stepFadeIn 0.4s ease;
+    }
+    @keyframes stepFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+    }
+    .form-control {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 12px;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+    .form-control:focus {
+      border-color: var(--primary-green);
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 0 8px rgba(40,167,69,0.3);
+      outline: none;
+    }
+
+    /* Buttons */
+    .btn-next, .btn-prev, .btn-submit {
+      border: none;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+      margin-top: 15px;
+    }
+    .btn-next, .btn-submit {
+      background: linear-gradient(135deg, var(--primary-green), var(--primary-green-hover));
+      color: #fff;
+    }
+    .btn-next:hover, .btn-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+    .btn-prev {
+      background: #6c757d;
+      color: #fff;
+    }
+    .btn-prev:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 576px) {
+      .sell-form-card {
+        padding: 20px;
+      }
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container text-center">
+      <a class="navbar-brand fw-bold" href="index.html">AGROVISTA</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="sell-hero">
+    <div class="hero-content text-center">
+      <h1 class="fw-bold">🚜 Sell Your Land Effortlessly!</h1>
+      <p class="lead">Connect with buyers and get the best value for your agricultural land.</p>
+    </div>
+  </header>
+
+  <!-- Form Container -->
+  <div class="container form-container">
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- Multi-step Form Card -->
+    <form id="sellLandForm" enctype="multipart/form-data" class="sell-form-card">
+      <!-- Step 1: Land Details -->
+      <div class="form-step form-step-active" id="step-1">
+        <h2 class="text-center mb-4 text-success fw-bold">🌿 Land Details</h2>
+        <p class="text-muted text-center">Provide accurate information about your land.</p>
+        <div class="mb-4">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" class="form-control" id="location" name="location" required>
+        </div>
+        <div class="mb-4">
+          <label for="price" class="form-label">Price</label>
+          <input type="number" class="form-control" id="price" name="price" required>
+        </div>
+        <div class="mb-4">
+          <label for="landSize" class="form-label">Land Size (in acres)</label>
+          <input type="number" class="form-control" id="landSize" name="landSize" required>
+        </div>
+        <div class="mb-4">
+          <label for="images" class="form-label">Upload Land Images</label>
+          <input type="file" class="form-control" id="images" name="images" multiple>
+        </div>
+        <div class="mb-4">
+          <label for="documents" class="form-label">Upload Documents</label>
+          <input type="file" class="form-control" id="documents" name="documents" multiple>
+        </div>
+        <div class="mb-4">
+          <label for="soilType" class="form-label">Soil Type</label>
+          <select class="form-select" id="soilType" name="soilType">
+            <option value="">Select soil type</option>
+            <option value="Clay">Clay</option>
+            <option value="Sandy">Sandy</option>
+            <option value="Loamy">Loamy</option>
+            <option value="Silty">Silty</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label for="description" class="form-label">Land Description</label>
+          <textarea class="form-control" id="description" name="description" rows="3" placeholder="Provide additional details about the land"></textarea>
+        </div>
+        <button type="button" class="btn btn-next btn-lg" onclick="nextStep(2)">Next ➡</button>
+      </div>
+
+      <!-- Step 2: Seller Details -->
+      <div class="form-step" id="step-2">
+        <h2 class="text-center mb-4 text-success fw-bold">🤝 Seller Details</h2>
+        <p class="text-muted text-center">Let buyers know who they’re dealing with.</p>
+        <div class="mb-4">
+          <label for="sellerName" class="form-label">Your Name</label>
+          <input type="text" class="form-control" id="sellerName" name="sellerName" required>
+        </div>
+        <div class="mb-4">
+          <label for="sellerPhone" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="sellerPhone" name="sellerPhone" required>
+        </div>
+        <div class="mb-4">
+          <label for="sellerEmail" class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="sellerEmail" name="sellerEmail" required>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-prev btn-lg" onclick="prevStep(1)">⬅ Back</button>
+          <button type="button" class="btn btn-next btn-lg" onclick="nextStep(3)">Next ➡</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Preview & Submit -->
+      <div class="form-step" id="step-3">
+        <h2 class="text-center mb-4 text-success fw-bold">📋 Preview & Submit</h2>
+        <p class="text-muted text-center">Review your details before submitting.</p>
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-prev btn-lg" onclick="prevStep(2)">⬅ Back</button>
+          <button type="submit" class="btn btn-submit btn-lg">🚀 Submit Listing</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS & Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- Optional: Particles.js for Background -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    let currentStep = 1;
+    function showStep(step) {
+      document.querySelectorAll(".form-step").forEach(stepDiv => {
+        stepDiv.classList.remove("form-step-active");
+      });
+      document.getElementById("step-" + step).classList.add("form-step-active");
+      // Update progress bar width (for 3 steps, each step adds 50% for step 2 and 3)
+      if(document.getElementById("progressBar")){
+        document.getElementById("progressBar").style.width = ((step - 1) * 50) + "%";
+      }
+    }
+    function nextStep(step) {
+      if (step <= 3) {
+        currentStep = step;
+        showStep(currentStep);
+      }
+    }
+    function prevStep(step) {
+      if (step >= 1) {
+        currentStep = step;
+        showStep(currentStep);
+      }
+    }
+  </script>
+  <script>
+    document.getElementById("sellLandForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("You must be logged in to submit a listing.");
+        window.location.href = "login.html";
+        return;
+      }
+      const formData = new FormData(this);
+      try {
+        const response = await fetch("http://localhost:5000/api/sell-land", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          },
+          body: formData
+        });
+        const result = await response.json();
+        if (response.ok) {
+          alert("✅ " + result.message);
+          this.reset();
+        } else {
+          alert("❌ Error: " + result.message);
+        }
+      } catch (error) {
+        console.error("❌ Error submitting form:", error);
+        alert("❌ Failed to submit. Check console for details.");
+      }
+    });
+  </script>
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#ffffff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.5, "random": false },
+        "size": { "value": 3, "random": true },
+        "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 },
+        "move": { "enable": true, "speed": 3, "direction": "none", "random": false, "straight": false, "out_mode": "out" }
+      },
+      "interactivity": {
+        "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+        "modes": { "repulse": { "distance": 100, "duration": 0.4 }, "push": { "particles_nb": 4 } }
+      },
+      "retina_detect": true
+    });
+  </script>
+  <div id="particles-js"></div>
+</body>
+</html>

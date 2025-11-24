@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy Land - AgroVista</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    /* Base Variables */
+    :root {
+      --primary-green: #28a745;
+      --primary-green-hover: #218838;
+      --white: #fff;
+    }
+
+    /* Global Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding-top: 100px;
+      background: #f8f9fa;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    nav.navbar {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    nav .navbar-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      color: var(--primary-green);
+    }
+
+    /* Hero Section with Animated Gradient Text */
+    .buy-hero {
+      position: relative;
+      height: 40vh;
+      background: url('assets/images/buy.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .buy-hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: textFadeIn 2s ease;
+    }
+    @keyframes textFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, var(--primary-green), var(--primary-green-hover), var(--primary-green));
+      background-size: 300% 300%;
+      animation: gradientShift 3s ease infinite;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero-content p {
+      font-size: 1.5rem;
+      color: var(--white); /* Explicitly white */
+    }
+
+    /* Main Container */
+    .container {
+      margin: 80px auto;
+    }
+
+    /* Filter Sidebar */
+    .filter-bar {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 80px;
+      transition: transform 0.3s ease;
+    }
+    .filter-bar h4 {
+      color: var(--primary-green);
+      margin-bottom: 20px;
+    }
+    .filter-bar label {
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .filter-bar .form-range,
+    .filter-bar .form-select,
+    .filter-bar .form-control {
+      margin-bottom: 10px;
+    }
+    .filter-bar button {
+      transition: transform 0.3s ease;
+    }
+    .filter-bar button:hover {
+      transform: scale(1.05);
+    }
+    /* Align checkboxes and labels */
+    .form-check {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .form-check-label {
+      margin-left: 0.5rem;
+    }
+
+    /* Land Listings Grid */
+    .land-card {
+      background: var(--white);
+      border: none;
+      border-radius: 10px;
+      overflow: hidden;
+      perspective: 1000px;
+      animation: cardFadeIn 0.5s ease forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .land-card:hover {
+      transform: translateY(-5px) scale(1.02) rotateY(3deg);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    @keyframes cardFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .land-card img {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .land-card:hover img {
+      transform: scale(1.05);
+    }
+    .land-card .card-body {
+      padding: 15px;
+    }
+    .land-card h5 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.25rem;
+      color: var(--primary-green);
+    }
+    .land-card p {
+      font-size: 0.95rem;
+      margin: 0;
+    }
+    .land-card a.btn,
+    .land-card button.btn {
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .filter-bar {
+        position: relative;
+        top: auto;
+        margin-bottom: 20px;
+      }
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top px-5 py-3">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="index.html">AGROVISTA</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="index.html#about" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="index.html#services" class="nav-link">Services</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="buy-hero">
+    <div class="hero-content">
+      <h1>Buy Your Dream Land</h1>
+      <p>Find the perfect piece of agricultural land tailored for you</p>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <div class="container my-5">
+    <div class="row">
+      <!-- Sidebar Filter Section -->
+      <div class="col-md-3">
+        <div class="filter-bar p-3">
+          <h4 class="text-success mb-3">Filter Results</h4>
+          <!-- Price Range -->
+          <label for="priceRange" class="form-label">Price Range:</label>
+          <input type="range" id="priceRange" min="10000" max="1000000" step="5000" class="form-range">
+          <span id="priceValue">₹50000</span>
+  
+          <!-- Land Size Filter -->
+          <label for="landSizeFilter" class="form-label mt-3">Land Size:</label>
+          <select id="landSizeFilter" class="form-select">
+            <option value="">Any Size</option>
+            <option value="small">Less than 2 acres</option>
+            <option value="medium">2-10 acres</option>
+            <option value="large">More than 10 acres</option>
+          </select>
+  
+          <!-- Soil Type -->
+          <label class="form-label mt-3">Soil Type:</label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="Clay" id="soilClay">
+            <label class="form-check-label" for="soilClay">Clay</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="Sandy" id="soilSandy">
+            <label class="form-check-label" for="soilSandy">Sandy</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="Loamy" id="soilLoamy">
+            <label class="form-check-label" for="soilLoamy">Loamy</label>
+          </div>
+  
+          <!-- Location Filter -->
+          <label for="locationFilter" class="form-label mt-3">Location:</label>
+          <input type="text" id="locationFilter" class="form-control" placeholder="Enter location">
+  
+          <!-- Recently Listed -->
+          <div class="form-check mt-3">
+            <input class="form-check-input" type="checkbox" id="recentlyListed">
+            <label class="form-check-label" for="recentlyListed">Show recently listed (Last 7 days)</label>
+          </div>
+          <button class="btn btn-success w-100 mt-4" onclick="applyFilters()">Apply Filters</button>
+        </div>
+      </div>
+  
+      <!-- Land Listings Section -->
+      <div class="col-md-9">
+        <div class="row" id="landListings"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Update price value for the range slider
+    const priceRange = document.getElementById("priceRange");
+    const priceValue = document.getElementById("priceValue");
+    priceRange.addEventListener("input", () => {
+      priceValue.textContent = "₹" + priceRange.value;
+    });
+  
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/get-lands");
+        const lands = await response.json();
+        const listingsContainer = document.getElementById("landListings");
+        listingsContainer.innerHTML = "";
+  
+        lands.forEach(land => {
+          const landCard = document.createElement("div");
+          landCard.classList.add("col-md-4", "mb-4");
+          landCard.innerHTML = `
+            <div class="card land-card">
+              <img src="${land.images.length > 0 ? 'http://localhost:5000/' + land.images[0] : 'assets/images/default-land.jpg'}" class="card-img-top" alt="Land Image">
+              <div class="card-body">
+                <h5 class="card-title">${land.location}</h5>
+                <p><strong>Size:</strong> ${land.landSize} acres</p>
+                <p><strong>Price:</strong> ₹${land.price}</p>
+                <a href="land-details.html?id=${land._id}" class="btn btn-success">View Details</a>
+                <button class="btn btn-outline-primary save-btn mt-2" data-id="${land._id}"><i class="fas fa-heart"></i> Save</button>
+                <button class="btn btn-warning add-cart-btn mt-2" data-id="${land._id}">🛒 Add to Cart</button>
+              </div>
+            </div>
+          `;
+          listingsContainer.appendChild(landCard);
+        });
+  
+        document.querySelectorAll(".save-btn").forEach(button => {
+          button.addEventListener("click", async (event) => {
+            const landId = event.target.getAttribute("data-id");
+            await saveListing(landId);
+          });
+        });
+  
+        document.querySelectorAll(".add-cart-btn").forEach(button => {
+          button.addEventListener("click", async (event) => {
+            const landId = event.target.getAttribute("data-id");
+            await addToCart(landId);
+          });
+        });
+  
+      } catch (error) {
+        console.error("Error fetching land listings:", error);
+      }
+    });
+  
+    async function saveListing(listingId) {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("You must be logged in to save listings.");
+        window.location.href = "login.html";
+        return;
+      }
+      try {
+        const response = await fetch(`http://localhost:5000/api/save-listing/${listingId}`, {
+          method: "POST",
+          headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }
+        });
+        const result = await response.json();
+        if (response.ok) alert("Listing saved successfully!");
+        else alert(result.message || "Failed to save listing.");
+      } catch (error) {
+        console.error("❌ Error saving listing:", error);
+        alert("Server error. Please try again.");
+      }
+    }
+  
+    async function addToCart(listingId) {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("You must be logged in to add to cart.");
+        window.location.href = "login.html";
+        return;
+      }
+      try {
+        const response = await fetch(`http://localhost:5000/api/add-to-cart/${listingId}`, {
+          method: "POST",
+          headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }
+        });
+        const result = await response.json();
+        if (response.ok) alert("Added to cart successfully!");
+        else alert(result.message || "Failed to add to cart.");
+      } catch (error) {
+        console.error("❌ Error adding to cart:", error);
+        alert("Server error. Please try again.");
+      }
+    }
+  
+    function applyFilters() {
+      // Implement filter logic here...
+      alert("Filters applied!");
+    }
+  </script>
+</body>
+</html>
