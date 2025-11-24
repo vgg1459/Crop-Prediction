@@ -19,8 +19,8 @@ This repository contains the crop prediction project and land e-commerce system 
 ## Instructions
 
 1. Create a virtual environment:
-   ```bash
-   python -m venv venv
+```bash
+python -m venv venv
 ```
 
 2. Activate the environment:
