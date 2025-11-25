@@ -38,3 +38,6 @@ python app.py
 ```
 5. Run frontend
 Open frontend/index.html in your browser
+
+## Demo Video
+https://drive.google.com/file/d/1j84mQWDVrFeFcxPZJWzAblrX44OtFSWG/view?usp=sharing
