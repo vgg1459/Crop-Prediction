@@ -2,8 +2,6 @@
 
 This repository contains the crop prediction project and land e-commerce system developed during my acaemic program. the project includes frontend and backend components and demonstrates skills in web development, Python, Node.js, and data analysis.
 
-## Projects
-
 1. **Crop Prediction System**
    - Frontend + backend
    - Python, Flask, HTML/CSS, JavaScript
