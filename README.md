@@ -35,10 +35,7 @@ pip install -r requirements.txt
 python app.py
 ```
 5. Run frontend
-Open frontend/index.html in your browser
-
-## Disclaimer
-The backend of this project is **not fully functional**, so some features may not work as intended.  
+Open frontend/index.html in your browser  
 
 ## Demo Video
 https://drive.google.com/file/d/1j84mQWDVrFeFcxPZJWzAblrX44OtFSWG/view?usp=sharing
