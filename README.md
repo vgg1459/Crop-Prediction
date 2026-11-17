@@ -1,6 +1,6 @@
 # Precision Agriculture & Land E-Commerce System
 
-This repository contains the crop prediction project and land e-commerce system developed during my acaemic program. the project includes frontend and backend components and demonstrates skills in web development, Python, Node.js, and data analysis.
+This repository contains only a sample of the the crop prediction project and land e-commerce system developed during my academic program. the project includes frontend and backend components.
 
 1. **Crop Prediction System**
    - Frontend + backend
